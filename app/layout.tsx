@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { fonts } from "@/constants"
+import { fonts } from "@/constants";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes"
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -10,12 +12,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { geistSans, geistMono } = fonts;
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider appearance={{ 
+      baseTheme: dark, 
+      variables: { 
+        colorPrimary: "#3371FF",
+        fontSize: "16px"
+      }
+    }}>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+        >
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
