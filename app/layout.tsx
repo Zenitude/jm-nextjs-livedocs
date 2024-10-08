@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fonts } from "@/constants";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Provider } from "./Provider";
 import { dark } from "@clerk/themes"
 import "./globals.css";
 
@@ -23,7 +24,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
         >
-          {children}
+          <Provider>
+            {children}
+          </Provider>
         </body>
       </html>
     </ClerkProvider>

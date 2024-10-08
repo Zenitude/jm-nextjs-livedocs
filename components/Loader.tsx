@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-const Loader = () => {
+export default function Loader() {
   return (
     <div className="loader">
       <Image 
@@ -14,5 +14,3 @@ const Loader = () => {
     </div>
   )
 }
-
-export default Loader
