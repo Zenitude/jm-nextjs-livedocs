@@ -11,8 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { updateDocument } from "@/lib/actions/room.actions";
 
-export default function CollaborativeRoom({roomId, roomMetadata}: CollaborativeRoomProps) {
-  const currentUserType = 'editor';
+export default function CollaborativeRoom({roomId, roomMetadata, users, currentUserType }: CollaborativeRoomProps) {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [documentTitle, setDocumentTitle] = useState(roomMetadata.title);
@@ -121,7 +120,7 @@ export default function CollaborativeRoom({roomId, roomMetadata}: CollaborativeR
               </SignedIn>
             </div>
           </Header>
-          <Editor  />
+          <Editor  roomId={roomId} currentUserType={currentUserType} />
         </div>
       </ClientSideSuspense>
     </RoomProvider>

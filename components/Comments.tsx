@@ -2,7 +2,6 @@ import { cn } from '@/lib/utils';
 import { useIsThreadActive } from '@liveblocks/react-lexical';
 import { Composer, Thread } from '@liveblocks/react-ui';
 import { useThreads } from '@liveblocks/react/suspense';
-import React from 'react'
 
 const ThreadWrapper = ({ thread }: ThreadWrapperProps) => {
   const isActive = useIsThreadActive(thread.id);
@@ -19,7 +18,7 @@ const ThreadWrapper = ({ thread }: ThreadWrapperProps) => {
   )
 }
 
-const Comments = () => {
+export default function Comments() {
   const { threads } = useThreads();
 
   return (
@@ -32,5 +31,3 @@ const Comments = () => {
     </div>
   )
 }
-
-export default Comments
