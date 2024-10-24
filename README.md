@@ -1,5 +1,8 @@
 # JavaScript Mastery - Next.js - Live Docs
 
+Youtube Video : [Build and Deploy a Realtime Next.js App with Permissions and Notifications](https://www.youtube.com/watch?v=y5vE8y_f_OM)
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
