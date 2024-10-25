@@ -1,7 +1,7 @@
 'use client'
 
 import { useSelf } from "@liveblocks/react/suspense";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Dialog,
@@ -19,6 +19,9 @@ import Image from "next/image";
 import UserTypeSelector from "./UserTypeSelector";
 import Collaborator from "./Collaborator";
 import { updateDocumentAccess } from "@/lib/actions/room.actions";
+import { getUsers } from "@/lib/actions/user.actions";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Terminal } from "lucide-react";
 
 export default function ShareModal(
   {roomId, collaborators, creatorId, currentUserType}: ShareDocumentDialogProps
@@ -27,11 +30,29 @@ export default function ShareModal(
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [userType, setUserType] = useState<UserType>('viewer');
+  const [collaboratorNotExist, setCollaboratorNotExist] = useState(false);
 
   const user = useSelf();
 
+  useEffect(() => {
+    if(!open) {
+      setCollaboratorNotExist(false);
+    }
+  }, [open])
+
   const shareDocumentHandler = async () => {
     setLoading(true);
+
+    const users = await getUsers();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const findUser = users.filter((user: any) => user.email === email)
+    console.log('findUser : ', findUser)
+    if(findUser.length === 0) { 
+      setCollaboratorNotExist(true);
+      setLoading(false);
+      return;
+    }
 
     await updateDocumentAccess({
       roomId, 
@@ -64,6 +85,16 @@ export default function ShareModal(
             Select wich users can view and edit this document
           </DialogDescription>
         </DialogHeader>
+        { collaboratorNotExist && (
+          <Alert>
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Collaborator does not exist !</AlertTitle>
+            <AlertDescription>
+              The entered email does not correspond to any registered collaborator.
+              Retry with email from existing collaborator.
+            </AlertDescription>
+          </Alert>
+        )}
         <Label htmlFor="email" className="mt-6 text-blue-100">Email address</Label>
         <div className="flex items-center gap-3">
           <div className="flex flex-1 rounded-md bg-dark-400">
