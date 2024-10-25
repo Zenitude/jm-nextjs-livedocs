@@ -3,8 +3,6 @@
 import Image from "next/image";
 import { useState } from "react";
 
-//import { deleteDocument } from "@/lib/actions/room.actions";
-
 import {
   Dialog,
   DialogClose,

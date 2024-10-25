@@ -18,6 +18,7 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import UserTypeSelector from "./UserTypeSelector";
 import Collaborator from "./Collaborator";
+import { updateDocumentAccess } from "@/lib/actions/room.actions";
 
 export default function ShareModal(
   {roomId, collaborators, creatorId, currentUserType}: ShareDocumentDialogProps
@@ -29,7 +30,18 @@ export default function ShareModal(
 
   const user = useSelf();
 
-  const shareDocumentHandler = async () => {}
+  const shareDocumentHandler = async () => {
+    setLoading(true);
+
+    await updateDocumentAccess({
+      roomId, 
+      email, 
+      userType: userType as UserType, 
+      updatedBy: user.info
+    });
+
+    setLoading(false);
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
